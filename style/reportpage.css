@@ -79,6 +79,9 @@ body{
 #reportForm input{
     margin-bottom: 10px;
 }
+#reportForm select{
+    margin-bottom: 10px;
+}
 #reportForm textarea{
     display: flex;
     width: 100%;
