@@ -221,6 +221,7 @@ footer{
     border-left: 6px solid #b86d37; /* Theme color */
     transition: transform 0.2s ease-in-out;
     scroll-snap-align: start;
+    text-wrap: wrap;
 }
 .report-element:hover {
     transform: scale(1.05);
