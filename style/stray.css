@@ -1,0 +1,253 @@
+/*google fonts (Radley) */
+.radley-regular {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  .radley-regular-italic {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+body{
+    background-color: #f4f1e8;
+    font-family: "Radley", serif;
+    max-width: 100%;
+}
+.logo-search-bar{
+    max-width: 100%;
+    display: flex;
+}
+.logo{
+    margin-left: 50%;
+    margin-right: 0px;
+    translate: -50%;
+    padding: 4vh;
+}
+.searchform{
+    margin-top: auto;
+    margin-right: 1vw;
+    margin-bottom: auto;
+    margin-left: auto;
+    border: 2px solid black;
+    background-color: white;
+    padding: 5px 10px;
+    border-radius: 30px;
+    width: 250px;
+    max-width: fit-content;
+}
+.search-box{
+    border: none;
+    outline: none;
+    padding: 8px;
+    flex: 1;
+    font-size: 15px;
+}
+.search-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+h1{
+    position: relative;
+    text-align: center;
+    width: 100%;
+    font-size: 5vw;
+    margin-left: 50%;
+    translate: -50%;
+}
+#italic{
+    font-family: "Radley", serif;
+    font-style: italic;
+}
+
+#bold{
+    font-family: "Radley", serif;
+    font-weight: 700;
+    color: #8B4513;
+}
+
+#small-italic{
+    font-family: "Radley", serif;
+    font-style: italic;
+    font-size: 2vw;
+    font-weight: normal;
+    text-align: center;
+    display: block;
+    margin-left: 35vw;
+    margin-top: -1vw;
+}
+#first__hook{
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    text-align: center;
+    font-size: 2vw;
+}
+#box1 #report__toggle {
+    font-family: "Radley", serif;
+    position: relative;
+    display: block;
+    text-align: center;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+}
+.learn__more {
+    margin-top: 10px;
+    font-family: "Radley", serif;
+    font-style: italic;
+    position: relative;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #8B4513;
+}
+#learn__more__line {
+    position: relative;
+    margin-left: 50%;
+    margin-right: 0px;
+    translate: -50%;
+}
+h2 {
+    margin-top: 200px;
+    text-align: center;
+    position: relative;
+    font-size: 3vw;
+}
+#box2 #report__toggle{
+    font-size: 10px;
+    width: 150px;
+    position: relative;
+    margin-top: 3vw;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    border: 2px solid;
+    display: block;
+    justify-self: center;
+}
+#box2 #report__toggle:hover{
+    background-color: #b86d37;
+}
+.endangered-animals-container{
+    justify-content: center;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    flex-wrap: wrap;
+    overflow: visible;
+}
+.endangeredanimals{
+    width: min-content;
+    margin-bottom: 2vw;
+    background-color: white;
+    padding: 5vh;
+    border-radius: 2vw;
+}
+.endangeredanimals p{
+    text-align: justify;
+}
+
+/*temporary borders and visual styles*/
+.box{
+    margin-bottom: 50px;
+}
+.endangeredanimals img{
+    border-radius: 10%;
+    width: 30vw;
+    height: auto;
+    aspect-ratio: 3 / 2;
+}
+/* Back to Top Button Styles */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #b86d37; /* Warm color */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    z-index: 999;
+    transform: scale(0.7);
+}
+
+/* Hover effect */
+.back-to-top:hover {
+    background-color: #9a572c; /* Darker shade on hover */
+    transform: scale(1);
+}
+
+/* When the button is visible */
+.back-to-top.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Smooth Scroll Effect */
+html {
+    scroll-behavior: smooth;
+}
+footer{
+    text-align: center;
+}
+#sightings_container {
+    justify-self: center;
+    display: grid;
+    gap: 20px;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 50vw;
+    width: min-content;
+    white-space: nowrap;
+    scroll-snap-type: y mandatory;
+}
+.report-element {
+    flex: 0 0 450px;
+    min-width: 450px;
+    max-width: 500px;
+    background-color: #fff7f0; /* Slightly lighter background */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-left: 6px solid #b86d37; /* Theme color */
+    transition: transform 0.2s ease-in-out;
+    scroll-snap-align: start;
+}
+.report-element:hover {
+    transform: scale(1.05);
+}
+/*first section media configuration*/
+@media (max-width:950px){
+    .searchform{
+        display: none;
+    }
+    .logo{
+        transform: scale(0.5);
+        padding: 0;
+    }
+    #box1 #report__toggle{
+        font-size: 2vw;
+    }
+    .learn__more{
+        transform: scale(0.7);
+    }
+    #learn__more__line{
+        transform: scale(0.7);
+    }
+    .endangeredanimals{
+        width: max-content;
+        margin-bottom: 2vw;
+        background-color: white;
+        padding: 5vh;
+        border-radius: 2vw;
+    }
+}

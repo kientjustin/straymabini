@@ -1,0 +1,45 @@
+/*google fonts (Radley) */
+.radley-regular {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.radley-regular-italic {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+body{
+    background-color: #f4f1e8;
+    font-family: "Radley", serif;
+    max-width: 100%;
+    margin: 50px;
+}
+#navbox{
+    display: flex;
+    justify-self: center;
+    gap: 50px;
+}
+section{
+    margin: 50px;
+}
+h1, h2{
+    text-align: center;
+}
+p {
+    text-align: center;
+}
+nav ul{
+    list-style: none;
+    gap: 80px;
+    background-color: rgb(223, 223, 204);
+    padding: 20px;
+    border-radius: 10px;
+}
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+#list{
+    justify-self: center;
+}

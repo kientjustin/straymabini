@@ -1,0 +1,88 @@
+div {
+    margin: 5px;
+}
+
+.radley-regular {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.radley-regular-italic {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+body{
+    background-color: #f4f1e8;
+    font-family: "Radley";
+}
+#auth h1{
+    text-align: center;
+    margin-top: 5vw;
+    margin-bottom: 4vw;
+}
+.authcont{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5vw;
+}
+.authwrapper{
+    padding-left: 8vw;
+    padding-right: 8vw;
+    padding-top: 6vw;
+    padding-bottom: 6vw;
+    border: 3px solid;
+    background-color: #e1ded6;
+    border-radius: 5%;
+}
+.authdisp{
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-top: 4vw;
+    padding-bottom: 6vw;
+    background-color: #fff;
+    border-radius: 10%;
+}
+.authdisp form button:hover{
+    cursor: pointer;
+}
+.authdisp input{
+    margin-bottom: 10px;
+}
+.navi{
+    display: flex;
+    gap: 79vw;
+}
+.navi a{
+    color: black;
+    text-decoration: none;
+}
+.navi .redirectbtn{
+    margin-top: 20px;
+    background-color: #ada693;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px
+}
+.navi .redirectbtn:hover{
+    cursor: pointer;
+}
+.navi #logoutButton:hover{
+    cursor: pointer;
+}
+#uploadcontainer{
+    justify-self: center;
+    padding: 5vw;
+}
+#reportForm input{
+    margin-bottom: 10px;
+}
+#reportForm textarea{
+    display: flex;
+    width: 100%;
+}
+#reportset{
+    text-align: center;
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/reportpage.css">
+
+    <!-- Google fonts (Radley) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Radley:ital@0;1&display=swap" rel="stylesheet">
+
+    <title>Report Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+    <div id="auth">
+        <h1>Please Log In First To Submit a Valid Report</h1>
+
+        <div class="authcont">
+            <div class="authwrapper">
+                <div class="authdisp" id="signindisp">
+                    <h2>Sign Up</h2>
+                    <form id="signupForm">
+                        <label for="signupEmail">Email:</label>
+                        <input type="email" id="signupEmail" required>
+                        <br>
+                        <label for="signupPassword">Password:</label>
+                        <input type="password" id="signupPassword" required>
+                        <br>
+                        <button type="submit" style="background-color: #ada693; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+            <div class="authwrapper">
+                <div class="authdisp" id="logindisp">
+                    <h2>Log In</h2>
+                    <form id="loginForm">
+                        <label for="loginEmail">Email:</label>
+                        <input type="email" id="loginEmail" required>
+                        <br>
+                        <label for="loginPassword">Password:</label>
+                        <input type="password" id="loginPassword" required>
+                        <br>
+                        <button type="submit" style="background-color: #ada693; color: white; padding: 10px 20px; border: none; border-radius: 5px;">Log In</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navi">
+        <div class="redirectbtn">
+            <a id="backtohome" href="index.html"><em>Go back to Homepage</em></a>
+        </div>
+    
+        <div>
+            <!-- Logout button, initially hidden -->
+            <button id="logoutButton" style="display: none;">Log Out</button>
+        </div>
+    </div>
+
+    <div id="uploadcover">
+        <div id="uploadcontainer">
+            <h1 id="uploadset" style="display: none;">Upload a Sighting Report</h1>
+            <form id="reportForm" style="display: none;">
+                <label for="reporterName">Reporter Name:</label>
+                <input type="text" id="reporterName" name="reporterName" required>
+                <br>
+                <label for="animalType">Type of Animal:</label>
+                <input type="text" id="animalType" name="animalType" required>
+                <br>
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" required>
+                <br>
+                <label for="status">Status of Animal:</label>
+                <input type="text" id="status" name="status" required>
+                <br>
+                <label for="reportDate">Date:</label>
+                <input type="date" id="reportDate" name="reportDate" required>
+                <br>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea>
+                <br>
+                <button type="submit">Upload Report</button>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <h2 id="reportset" style="display: none;">Recent Reports</h2>
+    </div>
+
+    <div id="reports"></div>
+
+    <script type="module">
+        // Import the Supabase client
+        import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+        // Your Supabase URL and API Key
+        const supabaseUrl = "https://lqjdklsasxtbymuotugp.supabase.co";
+        const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxxamRrbHNhc3h0YnltdW90dWdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI1MTAyMTEsImV4cCI6MjA1ODA4NjIxMX0.PpSYXKFdxrdLjrmx4rc0i2N9ztP6Y-GkcGxt_-tppYA";
+
+        // Initialize Supabase client
+        const supabase = createClient("https://lqjdklsasxtbymuotugp.supabase.co", supabaseKey);
+
+        // Test if Supabase is connected
+        console.log("✅ Supabase Connected:", supabase);
+
+        export { supabase };
+        
+        // Check if the user is authenticated on page load
+        async function checkUserSession() {
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            if (sessionError) {
+                console.error('Error fetching session:', sessionError);
+            } else if (session) {
+                console.log('User is logged in:', session.user);
+                document.getElementById('auth').style.display = 'none'; // Hide auth section
+                document.getElementById('reportForm').style.display = 'block'; // Show report form
+                document.getElementById('uploadset').style.display = 'block'; // Show report form heading
+                document.getElementById('reportset').style.display = 'block'; // Show report form heading
+                document.getElementById('logoutButton').style.display = 'block'; // Show logout button
+                fetchReports(); // Fetch reports if user is logged in
+            }
+        }
+
+        // Sign Up
+        document.getElementById('signupForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            const { user, error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                console.error('Error signing up:', error);
+                alert('Sign up failed: ' + error.message);
+            } else {
+                console.log('User signed up:', user);
+                alert('Sign up successful! Please log in.');
+            }
+        });
+
+        // Log In
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) {
+                console.error('Error logging in:', error);
+                alert('Login failed: ' + error.message);
+            } else {
+                console.log('User logged in:', data.user);
+                alert('Login successful!');
+                document.getElementById('auth').style.display = 'none'; // Hide auth section
+                document.getElementById('reportForm').style.display = 'block'; // Show report form
+                document.getElementById('uploadset').style.display = 'block'; // Show report form heading
+                document.getElementById('reportset').style.display = 'block'; // Show report form heading
+                document.getElementById('logoutButton').style.display = 'block'; // Show logout button
+                fetchReports(); // Fetch reports after login
+            }
+        });
+
+        // Log Out
+        document.getElementById('logoutButton').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signOut();
+            if (error) {
+                console.error('Error logging out:', error);
+                alert('Logout failed: ' + error.message);
+            } else {
+                console.log('User logged out');
+                alert('Logout successful!');
+                document.getElementById('auth').style.display = 'block'; // Show auth section
+                document.getElementById('reportForm').style.display = 'none'; // Hide report form
+                document.getElementById('uploadset').style.display = 'none'; // Hide report form heading
+                document.getElementById('logoutButton').style.display = 'none'; // Hide logout button
+            }
+
+            window.location.reload();
+        });
+
+        // Handle report submission
+        document.getElementById('reportForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const reporterName = document.getElementById('reporterName').value;
+            const animalType = document.getElementById('animalType').value;
+            const location = document.getElementById('location').value;
+            const status = document.getElementById('status').value;
+            const reportDate = document.getElementById('reportDate').value;
+            const description = document.getElementById('description').value;
+
+            // Insert the report into the uploads table
+            const { data, error } = await supabase
+                .from('uploads')
+                .insert([{ 
+                    reporter_name: reporterName, 
+                    animal_type: animalType, 
+                    location: location, 
+                    status: status, 
+                    report_date: reportDate, 
+                    description: description
+                }]);
+
+            if (error) {
+                console.error('Error uploading report:', error);
+                alert('Failed to submit report: ' + error.message);
+            } else {
+                console.log('Report uploaded:', data);
+                fetchReports(); // Refresh the report list
+            }
+        });
+
+        // Fetch and display reports
+        async function fetchReports() {
+            const { data, error } = await supabase
+                .from('uploads')
+                .select('*')
+                .order('id', {ascending: false});
+
+            if (error) {
+                console.error('Error fetching reports:', error);
+            } else {
+                const reportsDiv = document.getElementById('reports');
+                reportsDiv.innerHTML = ''; // Clear previous reports
+                data.forEach(report => {
+                    const reportElement = document.createElement('div');
+                    reportElement.innerHTML = `
+                        <div style="max-width: 700px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <strong>Reporter:</strong> ${report.reporter_name}<br>
+                            <strong>Animal Type:</strong> ${report.animal_type}<br>
+                            <strong>Location:</strong> ${report.location}<br>
+                            <strong>Status:</strong> ${report.status}<br>
+                            <strong>Date:</strong> ${new Date(report.report_date).toLocaleDateString()}<br>
+                            <strong>Description:</strong> ${report.description}<br>
+                        </div>
+                    `;
+                    reportsDiv.appendChild(reportElement);
+                });
+            }
+
+            document.getElementById('reportForm').reset();
+        }
+
+        // Call the function to check user session on page load
+        checkUserSession();
+    </script>
+</body>
+</html>
